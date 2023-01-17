@@ -1,0 +1,18 @@
+datadog:
+  site: datadoghq.com
+  apiKey: 55dbb614a7b899fa18b440c459b5f9cc
+  kubelet: 
+    tlsVerify: false
+  logs:
+    enabled: true
+    containerCollectAll: true
+  otlp:
+    receiver:
+      protocols:
+        grpc:
+          enabled: true
+  zipkin:
+    receiver:
+      protocols:
+        grpc:
+          enabled: true

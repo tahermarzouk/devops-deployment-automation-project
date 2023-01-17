@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+      component: server
+  template:
+    metadata:
+      labels:
+        app: my-app
+        component: server
+    spec:
+      containers:
+        - name: server
+          image: tahermarzouk/multi-server
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+

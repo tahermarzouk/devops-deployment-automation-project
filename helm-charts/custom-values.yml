@@ -1,0 +1,26 @@
+client:
+  image:
+    dockerHubId: stylerhun
+    name: multi-client
+    tag: latest 
+    replicaCount: 2
+  port: 3000
+server:
+  image:
+    dockerHubId: stylerhun
+    name: multi-server
+    tag: latest 
+    replicaCount: 2
+  port: 5000
+pv:
+  storage: 200Mi
+pgadmin:
+  image:
+    replicaCount: 2
+  port: 5432
+  targetPort: 5432
+  volumeMounts:
+    mountPath: /var/lib/postgresql/data
+ingress:
+  host: frontend.20.87.255.209.nip.io
+  pathType: Prefix

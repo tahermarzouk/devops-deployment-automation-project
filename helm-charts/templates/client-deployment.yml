@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: {{ .Values.client.image.replicaCount }}
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: {{ .Values.client.image.dockerHubId }}/{{ .Values.client.image.name }}:{{ .Values.client.image.tag }}
+          ports:
+            - containerPort: {{ .Values.client.port }}

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: {{ .Values.server.image.replicaCount }}
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "5000"
+        prometheus.io/scrape: "true"
+      labels:
+        component: server
+    spec:
+      containers:
+        - name: server
+          image: {{ .Values.server.image.dockerHubId }}/{{ .Values.server.image.name }}:{{ .Values.server.image.tag }}
+          ports:
+            - containerPort: {{ .Values.server.port }}
+          env:
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT # Needed for traces to work.
+              value: "http://$(HOST_IP):4317"
+            - name: OTEL_SERVICE_NAME           # Service name to be used by the tracer
+              value: "server-cluster-ip-service"

@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@opentelemetry/api": "^1.4.0",
+    "@opentelemetry/exporter-zipkin": "^1.9.0",
+    "@opentelemetry/node": "^0.24.0",
+    "@opentelemetry/tracing": "^0.24.0",
+    "body-parser": "*",
+    "cors": "2.8.4",
+    "express": "4.16.3",
+    "express-prometheus-middleware": "^1.2.0",
+    "nodemon": "1.18.3",
+    "pg": "8.0.3",
+    "prom-client": "^12.0.0",
+    "response-time": "^2.3.2",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
+    "winston": "^3.8.2"
+  }
+}
